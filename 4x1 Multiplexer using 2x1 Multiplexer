@@ -1,0 +1,16 @@
+module two_to_one_mux_Behav(input D0, D1, S, output Y);
+    assign Y = (D0&~S) | (D1&S); 
+endmodule
+
+
+module four_to_one_mux_Behav ( input  D0,               
+                         input  D1, 
+                         input  D2,                
+                         input  D3,                
+                         input s0,s1,              
+                         output out);            
+  wire y,s;
+    two_to_one_mux_Behav m1(D0,D1,s0,y);
+    two_to_one_mux_Behav m2(D2,D3,s0,s);
+    two_to_one_mux_Behav m3(y,s,s1,out); 
+endmodule
