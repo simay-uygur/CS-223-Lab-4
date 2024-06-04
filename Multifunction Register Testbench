@@ -1,0 +1,58 @@
+module multi_reg_tb;
+
+
+  reg clk = 0;
+  reg reset = 1;
+  reg [3:0] d;
+  reg shift_in;
+  reg [1:0] s;
+  
+  wire [3:0] qOut;
+  
+  
+  multi_reg mfreg (
+    .clk(clk),
+    .reset(reset),
+    .d(d),
+    .shift_in(shift_in),
+    .s(s),
+    .qOut(qOut)
+  );
+
+
+  always #5 clk = ~clk;
+
+
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(1);
+    reset = 1;
+    #10;
+    reset = 0;
+    d = 4'b1100;
+    shift_in = 1'b0;
+    s = 2'b00;
+    #10;
+   d = 4'b1010;
+    s = 2'b01;
+    #10;
+   shift_in = 1'b1;
+    s = 2'b10;
+    #10;
+   shift_in = 1'b0;
+    s = 2'b11;
+    #10;
+   reset = 1;
+    d = 4'b1111;
+    shift_in = 1'b1;
+    s = 2'b10;
+    #10;
+    reset = 0;
+    #10;
+   
+  end
+  
+endmodule
+
+
+
