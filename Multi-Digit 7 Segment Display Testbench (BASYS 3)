@@ -1,0 +1,52 @@
+module seven_segment_multi_display_tb;
+
+
+    reg [3:0] input0 ;
+    reg [3:0] input1 ;
+    reg [3:0] input2 ;
+    reg [3:0] input3 ;
+    logic [3:0] an ;
+    logic clock ;
+    wire [6:0] segmentInstances ;
+
+
+    // Instantiate the module under test
+    seven_segment_multi_display uut (
+        .clk(clock),
+        .firstOne(input0),
+        .secondOne(input1),
+        .thirdOne(input2),
+        .fourthOne(input3),
+        .an(an),
+        .segment(segmentInstances)
+    );
+
+
+    initial begin
+        clock = 0;
+        forever #1 begin
+            #5 clock = ~clock;
+        end
+    end
+
+    initial begin
+        $monitor ("%b %b %b %b %b %b %b " , segmentInstances[6], segmentInstances[5], segmentInstances[4], segmentInstances[3], segmentInstances[2], segmentInstances[1], segmentInstances[0]);
+        input0 = 4'd0 ; input1 = 4'd1 ; input2 = 4'd3 ; input3 = 4'd1 ;
+        #10;
+        input0 = 4'd1 ; input1 = 4'd9 ; input2 = 4'd4 ; input3 = 4'd2 ;
+        #10;
+        input0 = 4'd6 ; input1 = 4'd4 ; input2 = 4'd5 ; input3 = 4'd10 ;
+        #10;
+        input0 = 4'd9 ; input1 = 4'd3 ; input2 = 4'd6 ; input3 = 4'd4 ;
+        #10;
+        input0 = 4'd10 ; input1 = 4'd11 ; input2 = 4'd7 ; input3 = 4'd4 ;
+        #10;
+        input0 = 4'd12 ; input1 = 4'd0 ; input2 = 4'd8 ; input3 = 4'd8 ;
+        #10;
+        input0 = 4'd4 ; input1 = 4'd8 ; input2 = 4'd9 ; input3 = 4'd5 ;
+        #10;
+        $finish;
+    end
+
+
+endmodule
