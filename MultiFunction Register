@@ -1,0 +1,31 @@
+module multi_reg(
+  input shift_in,
+  input [1:0] s,
+  input reset,
+  input clk, 
+  input [3:0]     d,
+  output wire [3:0]    qOut
+);
+  wire [3:0] outMux;
+  wire clk1;
+  
+  newClock n1(clk,clk1);
+  
+  four_to_one_mux_Behav f3(qOut[3],d[3],qOut[2],shift_in,
+                           s[0],s[1],outMux[3]);
+
+
+  four_to_one_mux_Behav f2(qOut[2], d[2],qOut[1],qOut[3],
+                           s[0],s[1],outMux[2] ); 
+
+
+  four_to_one_mux_Behav f1(qOut[1],d[1],qOut[0],qOut[2],
+                           s[0],s[1],outMux[1]); 
+
+
+  four_to_one_mux_Behav f0(qOut[0],d[0],shift_in,qOut[1],
+                           s[0],s[1],outMux[0]); 
+  
+  d_flip_flop df(clk1,reset, outMux, qOut); 
+  
+endmodule
