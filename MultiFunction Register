@@ -29,3 +29,27 @@ module multi_reg(
   d_flip_flop df(clk1,reset, outMux, qOut); 
   
 endmodule
+
+
+module newClock(input clk, output reg seconds);
+
+
+  logic clk_seconds ;
+  logic [27:0] count;
+
+
+  always @(posedge clk)
+  begin
+    count <= count + 1;
+    if (count == 25_000_000)
+    begin
+      count <= 0;
+      clk_seconds <= ~clk_seconds;
+    end
+  end
+
+
+  assign seconds = clk_seconds;
+
+
+endmodule
